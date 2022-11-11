@@ -5,10 +5,11 @@
 <p> I used some trips and tricks in this project..</p>
 <p>Working with API Clients: Postman</p>
 <p>API Auth with Sanctum</p>
-<p>Authorization: Spatie Permission </p>
-<p>File Uploads : Spatie Medialibrary</p>
-<p>Local Debugging Tools: Debugbar,</p>
+<p>Authorization: Spatie Permission Package</p>
+<p>File Uploads : Spatie Medialibrary Package</p>
+<p>Local Debugging Tools: Debugbar</p>
 <p>Route Caching</p>
 <p>Model Observers</p>
 <p>Caching for cache Eloquent Query Results to Load Pages Instantly</p>
 <p>Queueable Classes and Jobs</p>
+<p>Real-time: Broadcasting, Echo and Pusher</p>
