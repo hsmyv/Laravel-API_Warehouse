@@ -2,7 +2,7 @@
 
 <p>I have created little warehouse management. But this project not only for Warehouse Management because I added some laravel packages and other trips and tricks which I have learned along doing internship.</p>
 
-I used some trips and tricks in this project..
+<p> I used some trips and tricks in this project..
 Working with API Clients: Postman
 API Auth with Sanctum
 Authorization: Spatie Permission 
@@ -11,4 +11,4 @@ Local Debugging Tools: Debugbar,
 Route Caching
 Model Observers
 Caching for cache Eloquent Query Results to Load Pages Instantly
-Queueable Classes and Jobs
+Queueable Classes and Jobs</p>
