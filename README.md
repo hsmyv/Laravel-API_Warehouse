@@ -12,4 +12,4 @@
 <p>Model Observers</p>
 <p>Caching for cache Eloquent Query Results to Load Pages Instantly</p>
 <p>Queueable Classes and Jobs</p>
-<p>Real-time: Broadcasting, Echo and Pusher</p>
+<p>Real-time: Broadcasting, Echo and Pusher, WebSocket</p>
