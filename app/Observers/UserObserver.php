@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\User;
 use App\Notifications\WelcomeNotification;
+use Illuminate\Support\Facades\Cache;
 class UserObserver
 {
     /**
@@ -14,7 +15,8 @@ class UserObserver
      */
     public function created(User $user)
     {
-       // $user->notify(new WelcomeNotification());
+       //$user->notify(new WelcomeNotification());
+       Cache::flush('users');
     }
 
     /**
@@ -25,7 +27,8 @@ class UserObserver
      */
     public function updated(User $user)
     {
-        //
+       // Cache::forget('users'); //doesn't work
+        Cache::flush();
     }
 
     /**
@@ -36,7 +39,8 @@ class UserObserver
      */
     public function deleted(User $user)
     {
-        //
+        //Cache::forget('users');
+        Cache::flush();
     }
 
     /**
@@ -47,7 +51,7 @@ class UserObserver
      */
     public function restored(User $user)
     {
-        //
+        Cache::forget('users');
     }
 
     /**

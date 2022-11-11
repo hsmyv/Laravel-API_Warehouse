@@ -23,9 +23,11 @@ class RequestCreatePost extends FormRequest
      */
     public function rules()
     {
+        $id = $this->request->get('user_id');
         return [
             'title' => ['required'],
-            'body' =>['required']
+            'body' =>  ['required'],
+            'user_id' => [auth()->user()->id]
         ];
     }
 }

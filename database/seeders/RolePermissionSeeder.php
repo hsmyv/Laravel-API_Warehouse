@@ -14,12 +14,12 @@ class RolePermissionSeeder extends Seeder
      */
     public function run()
     {
-        
-       // Role::create(['name' => 'Super-Admin']);
-       //Role::create(['name' => 'Admin']);
-       // Role::create(['name' => 'Standart-User']);
 
-        $role = User::where('id', 23)->first();
+       //Role::create(['name' => 'Super-Admin']);
+      // Role::create(['name' => 'Admin']);
+      // Role::create(['name' => 'Standart-User']);
+
+        $role = User::where('id', 12)->first();
         $permission = Permission::create(['name' => 'UpdateUser']);
         $role->givePermissionTo($permission);
 

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,10 +15,11 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::view('/', 'welcome')->name('home');
 
+Route::post('posts/{post}/comment', [CommentController::class, 'store'])->name('postcomment');
+Route::get('posts/{post}/comments', [CommentController::class, 'index'])->name('indexx');
 
-Route::controller(PostController::class)->group(function(){
+Route::controller(PostController::class)->middleware(['auth'])->group(function(){
     Route::get('showcreate', 'showcreate')->name('showcreate');
     Route::get('posts', 'index')->name('index');
     Route::get('showedit/{post}', 'showedit')->name('showedit');
@@ -28,3 +31,16 @@ Route::controller(PostController::class)->group(function(){
     Route::get('/download/{id}', 'download')->name('download');
     Route::get('/downloads', 'downloads')->name('downloads');
 });
+
+
+Route::controller(AuthController::class)->middleware(['guest'])->group(function(){
+    Route::post('/login',         'login')->name('loginn');
+    Route::get('/login',      'showlogin')->name('login');
+    Route::post('/register',   'register')->name('registerr');
+    Route::get('/register','showregister')->name('register');
+
+
+});
+
+ Route::post('logout', [AuthController::class , 'logout'])->name('actionlogout')->middleware('auth');
+ Route::get('/', [AuthController::Class, 'index'])->name('show');

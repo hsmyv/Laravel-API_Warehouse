@@ -8,16 +8,31 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-
+use Illuminate\Support\Facades\Cache;
 
 class AuthController extends Controller
 {
     public function index(Request $request)
     {
-        $users = User::with('roles')->get();
-        return $users;
+      //create user  \Illuminate\Support\Facades\Artisan::call('user:create --count=1');
+    //return Cache::remember('user', 60*60*24*24, function () {
+       $users=  User::with('roles')->get();
+     //  });
+         return view("welcome", compact('users'));
     }
-    
+
+    public function showlogin()
+    {
+        return view('login');
+    }
+
+    public function showregister()
+    {
+        return view('register');
+    }
+
+
+
     public function login(Request $request)
     {
        $fields = $request->validate([
@@ -32,15 +47,22 @@ class AuthController extends Controller
                 'message' => 'Invalid Credentials'
             ], 401);
         }
-      
+
         $token = $user->createToken('myappToken')->plainTextToken;
 
         $response = [
             'token' => $token,
             'user' => $user
-            
+
         ];
-        return response($response, 201);
+
+        if(Auth()->attempt($fields))
+        {
+            session()->regenerate();
+            return redirect()->route('index');
+        }
+
+       // return response($response, 201);
     }
 
 
@@ -70,8 +92,9 @@ class AuthController extends Controller
             'user' => $user,
             'token' => $token
         ];
-        
-        return response($response, 201);
+        Auth()->login($user);
+       return redirect()->route('index');
+        //return response($response, 201);
     }
     catch(\Spatie\Permission\Exceptions\RoleDoesNotExist $e){
         $user = User::where('id', $user->id)->firstorfail()->delete();
@@ -82,23 +105,17 @@ class AuthController extends Controller
 
 
     public function logout(Request $request){
+        Auth()->logout();
+        //$delete = auth()->user()->tokens()->delete();
+       //if($delete){
 
-        $delete = auth()->user()->tokens()->delete();
-        if($delete){      
-        return [
-            'message' => 'Logged out!'
-        ];
-
-    }else{
-         return [
-            'message' => 'Logged out!'
-        ];
-    }
+            return redirect()->route('show');
+      //  }
 
     }
 
     public function update(Request $request)
-    { 
+    {
 
         $user = User::where('email', $request->email)->firstOrFail();
     try{
@@ -108,7 +125,7 @@ class AuthController extends Controller
             'old_password' => 'required'
         ]);
 
-       
+
         if(!Hash::check($fields['old_password'], $user->password)){
 
             return response()->error(["Your password incorrect"], 401);
@@ -118,16 +135,17 @@ class AuthController extends Controller
             if($update){
                 $user->update([
                 'name' => $request->name,
-                'email'=> $request->email          
+                'email'=> $request->email
             ]);
             return $user;
-            }                     
+            }
     }
     }
         catch(\Spatie\Permission\Exceptions\RoleDoesNotExist $e){
             return response()->error(["You can select just Super-Admin, Admin, Standard-User"], 401);
 
         }
-        
+
     }
+
 }

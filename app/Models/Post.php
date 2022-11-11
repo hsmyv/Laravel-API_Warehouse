@@ -12,16 +12,23 @@ class Post extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
-    protected $guarded = [];
+    protected $with = ['user'];
+    protected $fillable = [
+    'title',
+    'body',
+    'user_id'
+    ];
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withDefault([
+            'name' => 'Deleted Profile'
+        ]);
 
     }
 
     public function comments()
     {
-       return $this->hasMany(Post::class);
+       return $this->hasMany(Comment::class);
     }
 
 
@@ -31,7 +38,7 @@ class Post extends Model implements HasMedia
         $this->addMediaCollection('images')
             ->singleFile();
         $this->addMediaCollection('downloads')
-            ->singleFile(); 
+            ->singleFile();
     }
 
     public function registerMediaConversions(Media $media = null): void

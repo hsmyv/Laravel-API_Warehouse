@@ -5,52 +5,69 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\RequestCreatePost;
 use App\Models\Post;
+use App\Models\User;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\MediaStream;
+use Illuminate\Support\Facades\Cache;
 
 class PostController extends Controller
 {
     public function showcreate(){
         return view('post-store');
     }
-    public function index()
+    public function index(Post $post)
     {
-      
-        return view('index',[
-            'posts' => Post::All()
-        ]);
-    }  
-    
+
+
+        $users = User::All();
+        $posts =  Cache::remember('post', 60*60*24*24, function(){
+            return Post::All();
+       });
+
+        return view('index', compact('posts', 'users'));
+
+    }
+
     public function showedit(Post $post)
     {
         return view('post-edit',compact('post'));
-        
+
     }
-    public function store(RequestCreatePost $request)
+    public function store(Request $request)
     {
-       $post = Post::create($request->validated());
+
+       $attribute = $request->validate([
+        'title' => 'required',
+        'body'  => 'required'
+       ]);
+       $attribute['user_id'] = auth()->id();
+
+       Post::create($attribute);
+
        if($request->hasFile('image')){
             $post->addMediaFromRequest('image')
                     ->usingName($request->title)
                     ->toMediaCollection('images');
        }
-      
+
        if($request->hasFile('downloadimage')){
             $post->addMediaFromRequest('downloadimage')
                     ->usingName($request->title)
                     ->toMediaCollection('downloads');
        }
+
+
         return redirect()->route('index');
     }
 
     public function destroy($id)
-    {   
+    {
         $post = Post::findOrFail($id);
         $post->delete();
         return back();
     }
 
-  
+
     public function update(RequestCreatePost $request, Post $post)
     {
         $post->update($request->validated());
@@ -77,7 +94,7 @@ class PostController extends Controller
     }
     public function downloads()
     {
-       
+
         $media = Media::where('collection_name', 'downloads')->get();
         return Mediastream::create('downloads.zip')->addMedia($media);
     }

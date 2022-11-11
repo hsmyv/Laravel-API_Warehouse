@@ -4,24 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Post;
-use App\Models\User;
 class Comment extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'body', 'user_id'
-    ];
+    protected $fillable = ['body', 'user_id'];
 
 
     public function post()
     {
-        $this->belongsTo(Post::class);
+       return $this->belongsTo(Post::class);
     }
 
     public function user()
     {
-        $this->belongsTo(User::class);
+        // I set withDefault because of avoid 'Trying to get property 'name' of non-object' when I fetch $comment->user->name
+       return $this->belongsTo(User::class)->withDefault(
+        [
+            'name' => 'Deleted Profile'
+        ]
+       );
     }
 }

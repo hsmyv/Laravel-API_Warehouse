@@ -1,5 +1,5 @@
 <x-main>
-
+{{auth()->user()->name}}
 <div class="max-w-6xl mx-auto mt-12">
     <div class="space-y-8 divide-y divide-gray-200 w-1/2 mt-10">
         <form method="POST" action="{{route('store')}}" enctype="multipart/form-data">

@@ -18,7 +18,7 @@ class WelcomeNotification extends Notification
      */
     public function __construct()
     {
-        //
+
     }
 
     /**
