@@ -15,7 +15,8 @@
                     <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                         <table class="min-w-full divide-y divide-gray-200">
                             <tbody class="bg-white divide-y divide-gray-200">
-                            @if ($posts->count())
+                            @if ($count = $posts->count())
+                            {{$count}}
                                @foreach ($posts as $post)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
@@ -27,7 +28,7 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                       {{-- </td>
+                                       </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                            <img class="w-20 h-20 rounded-full" src="{{$post->getFirstMediaUrl('images')}}"/>
                                         </td>
@@ -36,7 +37,7 @@
                                          </td>
                                          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <a href="{{route('showedit', $post->id)}}" class="text-blue-500 hover:text-blue-600">Edit</a>
-                                        </td>--}}
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
 
                                             <form method="POST" action="{{route('delete', $post->id)}}">
@@ -46,7 +47,7 @@
                                             </form>
                                         </td>
                                     </tr>
-                                 {{-- <div id="app">
+                                  <div id="app">
                                     <div class="container">
                                       |
                                       <div class="row justify-content-center">
@@ -86,7 +87,6 @@
                                     </section>
 
                                     @endforeach
-                                    --}}
                                 @endforeach
                             </tbody>
                         </table>

@@ -43,4 +43,4 @@ Route::controller(AuthController::class)->middleware(['guest'])->group(function(
 });
 
  Route::post('logout', [AuthController::class , 'logout'])->name('actionlogout')->middleware('auth');
- Route::get('/', [AuthController::Class, 'index'])->name('show');
+ Route::get('/', [AuthController::class, 'index'])->name('show');

@@ -15,10 +15,8 @@
     <body class="antialiased">
        {{$slot}}
 
-       <script src="<https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js>"></script>
-        <script src="app.js"></script>
-        <script src="{{ asset('/js/app.js') }}"></script>
-        <script src="https://unpkg.com/vue@next"></script>
-    </body>
 
+
+    </body>
+ <script src="/js/app.js"></script>
 </html>

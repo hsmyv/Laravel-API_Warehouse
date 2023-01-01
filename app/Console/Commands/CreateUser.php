@@ -12,9 +12,9 @@ class CreateUser extends Command
      *
      * @var string
      */
-   // protected $signature = 'user:create {--count=} {--verified}';
-    protected $signature = 'user:create {--verified} {name} {email} {password}';
- 
+    protected $signature = 'user:create {--count=} {--verified}';
+    ///protected $signature = 'user:create {--verified} {name} {email} {password}';
+
     /**
      * The console command description.
      *
@@ -40,6 +40,7 @@ class CreateUser extends Command
     public function handle()
     {
 
+        /*
         $bar = $this->output->createProgressBar(10);
         $bar->start();
         $bar->advance();
@@ -54,8 +55,8 @@ class CreateUser extends Command
         ]);
         $bar->finish();
         $this->info('Successfully created User:'.$name.'; Email:'. $email .'; Password:'. $password);
+*/
 
-            /*
         $count = $this->option('count');
         $bar = $this->output->createProgressBar($count);
         $bar->start();
@@ -76,6 +77,6 @@ class CreateUser extends Command
         $bar->finish();
         $this->info('Successfully created: '.$count.' user(s)');
         return 0;
-            */
+            
     }
 }

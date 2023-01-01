@@ -22,7 +22,7 @@ class PostController extends Controller
         $users = User::All();
         $posts =  Cache::remember('post', 60*60*24*24, function(){
             return Post::All();
-       });
+      });
 
         return view('index', compact('posts', 'users'));
 
@@ -33,7 +33,7 @@ class PostController extends Controller
         return view('post-edit',compact('post'));
 
     }
-    public function store(Request $request)
+    public function store(Request $request, Post $post)
     {
 
        $attribute = $request->validate([
@@ -41,9 +41,8 @@ class PostController extends Controller
         'body'  => 'required'
        ]);
        $attribute['user_id'] = auth()->id();
-
-       Post::create($attribute);
-
+       
+       $post = Post::create($attribute);
        if($request->hasFile('image')){
             $post->addMediaFromRequest('image')
                     ->usingName($request->title)

@@ -44,7 +44,7 @@ class CreatePost extends Command
         for ($i=0; $i < $count ; $i++) {
             $title = Str::random(10);
             $body  = Str::random(5);
-            $id    = '1';
+            $id    = '4';
 
             Post::create([
                 'title'  => $title,

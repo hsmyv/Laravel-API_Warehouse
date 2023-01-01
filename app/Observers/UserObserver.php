@@ -16,9 +16,8 @@ class UserObserver
     public function created(User $user)
     {
        //$user->notify(new WelcomeNotification());
-       Cache::flush('users');
+       Cache::flush();
     }
-
     /**
      * Handle the User "updated" event.
      *
@@ -40,7 +39,7 @@ class UserObserver
     public function deleted(User $user)
     {
         //Cache::forget('users');
-        Cache::flush();
+        Cache::pull();
     }
 
     /**

@@ -7,7 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-    <a>home page</a>
+    {{--<a>Welcome {{$user->name}}!</a>--}}
+    
 </body>
 </html>
 

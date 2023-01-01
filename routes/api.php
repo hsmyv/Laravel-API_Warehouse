@@ -51,5 +51,4 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 });
 
 
-
 Route::get('/', [AuthController::class, 'index']);
