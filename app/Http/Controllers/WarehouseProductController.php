@@ -27,14 +27,14 @@ class WarehouseProductController extends Controller
                     return response()
                     ->json(['message' => "Doesn't have $request->sender_warehouse_id.No Warehouse"]);
                     }
-            //we check if we have such a Receiver_Warehouse
+            //we check if we have such a Receiver_Warehouse or not
             $hasReceiverWarehouse = DB::table('warehouses')->where('id', $request->receiver_warehouse_id)->first();
                     if(!$hasReceiverWarehouse){
                     return response()
                     ->json(['message' => "Doesn't have $request->receiver_warehouse_id.No Warehouse"]);
                 }
-            
-            if ($validator->fails()) {    
+
+            if ($validator->fails()) {
                 return getError();
             }
 
@@ -52,7 +52,7 @@ class WarehouseProductController extends Controller
             ->get()
             ->sum('quantity');
             $total=$receiver_product-$sender_product;
-            
+
 
             //we check warehouses are same or no
             if($request->receiver_warehouse_id == $request->sender_warehouse_id){
@@ -68,10 +68,10 @@ class WarehouseProductController extends Controller
 
             else
                 {
-               
+
                     return response()->error(["You dont have enough product"], 404);
                 }
-            
+
     }
     public function index(Request $request)
     {
@@ -96,7 +96,7 @@ class WarehouseProductController extends Controller
         ->sum('quantity');
 
         $total=$receiver_product-$sender_product;
-      
+
         if($total <= 0)
         {
           return response()
@@ -105,10 +105,10 @@ class WarehouseProductController extends Controller
         else
         {
             return response()
-            ->json(['message' => "You have $total products" , "Received $receiver_product products", "Sended $sender_product products"]);   
-            
-        }    
+            ->json(['message' => "You have $total products" , "Received $receiver_product products", "Sended $sender_product products"]);
 
-    
-    }           
+        }
+
+
+    }
 }
